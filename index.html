@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="box">
+      <div class="show" id="show">0</div>
+      <div class="btn">
+        <button id="start">Start</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    const start = document.querySelector('#start');
+    const reset = document.querySelector('#reset');
+    const show = document.querySelector('#show');
+    let num = 0;
+    let h = 0;
+    let m = 0;
+    let s = 0;
+    const setTime = () => {
+      if (num === 10) {
+        num = 0;
+        s++;
+      }
+      if (s === 60) {
+        s = 0;
+        m++;
+      }
+      if (m === 60) {
+        m = 0;
+        h++;
+      }
+
+    }
+    const showTime = () => {
+      show.textContent = String(h).padStart(2, 0) + ":" + String(m).padStart(2, 0) + ":" + String(s).padStart(2, 0) + ":" + String(num).padStart(2, 0);
+    }
+    showTime();
+    let timing;
+    start.addEventListener('click', e => {
+
+      if (e.target.textContent === "Start") {
+        e.target.textContent = "Pause";
+        timing = setInterval(() => {
+          ++num;
+          setTime();
+          showTime();
+        }, 100);
+      }
+
+      else {
+        e.target.textContent = "Start";
+        clearInterval(timing);
+
+      }
+    });
+
+    reset.addEventListener('click', e => {
+      clearInterval(timing);
+      num = 0;
+      h = 0;
+      m = 0;
+      s = 0;
+      showTime();
+    })
+
+  </script>
+
+</body>
+
+</html>
